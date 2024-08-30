@@ -1,0 +1,38 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://qa.abatoolbox.com/');
+  await page.goto('https://qa.abatoolbox.com/login');
+  await page.getByLabel('Company (Registered Acronym)').click();
+  await page.getByLabel('Company (Registered Acronym)').fill('tac');
+  await page.getByLabel('Username (Registered Email').click();
+  await page.getByLabel('Username (Registered Email').fill('dorothy@tac.com');
+  await page.getByLabel('Password').click();
+  await page.getByLabel('Password').fill('Password1!');
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByRole('tab', { name: 'Team' }).click();
+  await page.getByRole('button', { name: 'Team Member' }).click();
+  await page.getByLabel('First Name *').click();
+  await page.getByLabel('First Name *').fill('Automation');
+  await page.getByLabel('Last Name *').click();
+  await page.getByLabel('Last Name *').fill('Admin');
+  await page.getByText('First Name *Middle InitialLast Name *Post NominalEmail *Role * Start Date *').click();
+  await page.getByLabel('Email *').click();
+  await page.getByLabel('Email *').fill('automationadmin@test.com');
+  await page.locator('div').filter({ hasText: /^Role \*$/ }).first().click();
+  await page.locator('#q-portal--menu--2').getByText('Administrator / Director').click();
+  await page.getByLabel('Start Date *').click();
+  await page.getByRole('button', { name: '20', exact: true }).click();
+  await page.getByRole('button', { name: 'Close' }).click();
+  await page.locator('label').filter({ hasText: 'Mountain Standard Time (UTC-' }).locator('i').click();
+  await page.getByText('Central Standard Time (UTC-06').click();
+  await page.locator('label').filter({ hasText: 'Provider Designations *' }).locator('i').click();
+  await page.getByText('Qualified Health Professional').click();
+  await page.getByRole('option', { name: 'RBT Registered Behavior' }).click();
+  await page.getByRole('option', { name: 'BT Behavior Technician' }).click();
+  await page.getByRole('option', { name: 'SLP Speech-Language' }).click();
+  await page.getByRole('option', { name: 'OT Occupational Therapist' }).click();
+  await page.getByRole('option', { name: 'PT Physical Therapist' }).click();
+  await page.locator('label').filter({ hasText: 'QHP, RBT, BT, SLP, OT,' }).locator('i').click();
+  await page.getByLabel('Send Invite Email').click();
+});
