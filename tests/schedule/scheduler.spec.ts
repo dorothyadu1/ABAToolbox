@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { NavigationPage } from '../page-objects/navigationPage';
-import { PageManager } from '../page-objects/pageManager';
+import { NavigationPage } from '../../page-objects/navigationPage';
 
 test.beforeEach(async({page}) => {
     await page.goto('https://qa.abatoolbox.com/login')
@@ -15,17 +14,19 @@ test.beforeEach(async({page}) => {
     await page.waitForResponse('https://tac.qa.abatoolbox.com/api/graphql/tenant')
 })
 
-test('Navigate to Learner Center Page', async({page}) => {
+test('Create a New Appointment', async({page}) => {
     
-    const pm = new PageManager(page)
-    //const pm.navigateTo() = new NavigationPage(page)
-    await pm.navigateTo().learnerCenterPage()
-    await pm.navigateTo().toolsPage()
-    await pm.navigateTo().teamPage()
-    await pm.navigateTo().officePage()
-    await pm.navigateTo().billingPage()
-    await pm.navigateTo().schedulePage()
-    await pm.navigateTo().adminPage()
+    const navigateTo = new NavigationPage(page)
+    
+    await navigateTo.schedulePage()
+   
+    //Select a Learner
+    await page.getByText('CICannoli Il').click();
 
+    //Create an appointment for today
+    await page.getByRole('button', { name: 'Appointment' }).click();
+    await page.locator('div').filter({ hasText: /^Provider \*$/ }).first().click();
+    await page.getByRole('option', { name: 'Automation Admin' }).click();
+    await page.getByRole('button', { name: 'Save' }).click();
 
 })

@@ -53,10 +53,23 @@ test('Create Active Graph for a Lesson', async({page}) => {
     await page.getByRole('button', { name: 'Continue' }).click();
 
     //Complete Note Details (Fill out form) and Save/Submit
+
+    //Select a scheduled appointment
     await page.locator('.grid > .q-field > .q-field__inner > .q-field__control > .q-field__append').click();
-    await page.getByRole('option', { name: '   New Appointment ' }).locator('div').nth(1).click();
-    await page.locator('label').filter({ hasText: 'Non-Billable ServiceType of' }).locator('i').click();
-    await page.getByRole('option', { name: '- Treatment w/Mod.' }).locator('div').nth(2).click();
+    // await page.getByRole('option', { name: '/30/2024 | 9:30 am - 10:00 am' }).locator('div').nth(1).click();
+    // await page.getByLabel('End Time *').click();
+    // await page.getByLabel('End Time *').click();
+    // await page.getByLabel('End Time *').fill('01:00 PM');
+
+    //New Appointment
+    await page.	getByRole('option', { name: ' New Appointment ' })
+    //await page.locator('.grid > .q-field > .q-field__inner > .q-field__control > .q-field__append').click();
+    //await page.getByRole('option', { name: '   New Appointment ' }).locator('div').nth(1).click();
+	//await page.getByRole('option', { name: 'Non-Billable Service' }).locator('div').nth(1).click();
+    await page.locator('label').filter({ hasText: 'Non-Billable ServiceType of Session *' }).locator('i').click();
+
+    //await page.locator('label').filter({ hasText: 'Non-Billable ServiceType of' }).locator('i').click();
+    //await page.getByRole('option', { name: '- Treatment w/Mod.' }).locator('div').nth(2).click();
     await page.getByLabel('Subjective *').click();
     await page.getByLabel('Subjective *').fill('Auto test');
     await page.getByLabel('Objective *').click();
@@ -72,5 +85,11 @@ test('Create Active Graph for a Lesson', async({page}) => {
     //await expect(page.locator('tbody')).toContainText('Lessons Completed 1 of 1');
     
     await page.getByRole('button', { name: 'SUBMIT SESSION' }).click();
+
+    //Expect balloons congratulations
+    await expect(page.getByText('Congratulations!')).toBeVisible();
+
+    //Navigate back to T&T
+    await page.getByRole('button', { name: 'Back to Teach and Treat' }).click();
 
 })
